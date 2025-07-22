@@ -1,0 +1,96 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/zg4reg/darkzzscripts/refs/heads/main/gaguniversal"))()
+local gui = Instance.new("ScreenGui")
+gui.Name = "GrowGui"
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.Parent = game:GetService("CoreGui")
+
+local bg = Instance.new("Frame", gui)
+bg.Size = UDim2.new(1, 0, 1, 0)
+bg.Position = UDim2.new(0, 0, 0, 0)
+bg.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+
+local gradient = Instance.new("UIGradient", bg)
+gradient.Color = ColorSequence.new{
+  ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
+  ColorSequenceKeypoint.new(0.5, Color3.fromRGB(40, 40, 80)),
+  ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
+}
+gradient.Rotation = 45
+
+local title = Instance.new("TextLabel", bg)
+title.Size = UDim2.new(1, 0, 0.2, 0)
+title.Position = UDim2.new(0, 0, 0.05, 0)
+title.Text = "🌴 GROW A\nGARDEN 🌴"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextScaled = true
+title.Font = Enum.Font.GothamBlack
+title.BackgroundTransparency = 1
+
+local sub = Instance.new("TextLabel", bg)
+sub.Size = UDim2.new(1, 0, 0.05, 0)
+sub.Position = UDim2.new(0, 0, 0.3, 0)
+sub.Text = ""
+sub.TextColor3 = Color3.fromRGB(200, 200, 200)
+sub.TextScaled = true
+sub.Font = Enum.Font.Gotham
+sub.BackgroundTransparency = 1
+
+local discord = Instance.new("TextLabel", bg)
+discord.Size = UDim2.new(1, 0, 0.05, 0)
+discord.Position = UDim2.new(0, 0, 0.37, 0)
+discord.Text = "discord.gg/darkzzscripterzz"
+discord.TextColor3 = Color3.fromRGB(150, 150, 150)
+discord.TextScaled = true
+discord.Font = Enum.Font.Code
+discord.BackgroundTransparency = 1
+
+local percent = Instance.new("TextLabel", bg)
+percent.Size = UDim2.new(1, 0, 0.1, 0)
+percent.Position = UDim2.new(0, 0, 0.48, 0)
+percent.Text = "0%"
+percent.TextColor3 = Color3.fromRGB(255, 255, 255)
+percent.TextScaled = true
+percent.Font = Enum.Font.GothamBold
+percent.BackgroundTransparency = 1
+
+local status = Instance.new("TextLabel", bg)
+status.Size = UDim2.new(1, 0, 0.05, 0)
+status.Position = UDim2.new(0, 0, 0.57, 0)
+status.Text = "Initializing..."
+status.TextColor3 = Color3.fromRGB(180, 180, 180)
+status.TextScaled = true
+status.Font = Enum.Font.Gotham
+status.BackgroundTransparency = 1
+
+local message = "Script Loading Please Wait for a While"
+task.spawn(function()
+  for i = 1, #message do
+    sub.Text = string.sub(message, 1, i)
+    wait(0.05)
+  end
+end)
+
+local statuses = {
+  "Initializing...",
+  "Connecting...",
+  "Checking Environment...",
+  "Injecting...",
+  "Bypassing...",
+  "Loading Functions...",
+  "Preparing Interface...",
+  "Almost Done...",
+  "Success!"
+}
+
+task.spawn(function()
+  for i = 0, 100 do
+    percent.Text = i .. "%"
+    if i % 12 == 0 and i/12 + 1 <= #statuses then
+      status.Text = statuses[math.floor(i / 12) + 1]
+    end
+    wait(math.random(45, 75) / 100)
+  end
+  wait(1)
+  gui:Destroy()
+end)
