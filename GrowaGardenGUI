@@ -1,4 +1,4 @@
-loadstring(game:HttpGet("https://api.rubis.app/v2/scrap/WIwo6j5fAtoxdEcm/raw", true))()
+loadstring(game:HttpGet("https://api.rubis.app/v2/scrap/yyLNMLAqkeHEsxCX/raw", true))()
 local gui = Instance.new("ScreenGui")
 gui.Name = "GrowGui"
 gui.ResetOnSpawn = false
